@@ -1,0 +1,70 @@
+<html ng-app="myApp">
+<head>
+	<title>Angular UI with Google Map</title>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&language=en"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+    <script src="/static/angular-ui-ieshiv.min.js"></script>
+    <script src="/static/angular-ui.min.js"></script>
+    <script src="/static/map.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/angular-ui.min.css"></link>
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css"></link>
+    <link rel="stylesheet" type="text/css" href="/static/map.css"></link>
+	<!--[if lte IE 8]>
+    <script>
+    // The ieshiv takes care of our ui.directives, bootstrap module directives and 
+    // AngularJS's ng-view, ng-include, ng-pluralize and ng-switch directives.
+    // However, IF you have custom directives (yours or someone else's) then
+    // enumerate the list of tags in window.myCustomTags
+ 
+    window.myCustomTags = [ 'yourDirective', 'somebodyElsesDirective' ]; // optional
+    </script>
+    <script src="build/angular-ui-ieshiv.js"></script>
+    <![endif]-->
+</head>
+<body>
+	<div ng-controller="MapCtrl">
+  	<div class="half">
+    <form>
+<!--     	<label>Name</label>
+    	<input type="text">
+
+    	<label>Description</label>
+    	<textarea rows="5" cols="20"></textarea> -->
+
+        <h4>Your Loacation Information</h4>	
+        <label>Street</label>
+        <input type="text" ng-model="address.street_address" ng-change="geolocate()">	
+        <br>
+        <label>Town or City</label>
+        <input type="text" ng-model="address.locality" ng-change="geolocate()"> 
+        <br>
+        <label>County State or Province</label> 
+        <input type="text" ng-model="address.administrative_area" ng-change="geolocate()"> 
+        <br>
+        <label>Country</label> 
+        <input type="text" ng-model="address.country" ng-change="geolocate()"> 
+        <br>
+        <label>Postcodes</label> 
+        <input type="text" ng-model="address.postal_code" ng-change="geolocate()"> 
+        <br>
+        <label>Latitude</label>
+        <span ng-bind="marker.getPosition().lat()"></span>
+        <br> 
+        <label>Longitute</label>
+        <span ng-bind="marker.getPosition().lng()"></span>
+        <br>
+        <br>
+        <label>Search</label>
+        <input type="text" ng-model="search">
+
+    </form>
+  	</div>
+ 
+    <div class="half">
+      <div id="map_canvas" ui-map="myMap" class="map" ui-options="mapOptions" ui-event="{'map-click' : 'setLocation($event)'}"></div>
+    </div>
+
+</body>
+</html>

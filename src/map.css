@@ -1,0 +1,13 @@
+input, textarea {
+	display: block;
+}
+
+.half {
+	width: 30%;
+	float: left;
+}
+
+.map {
+	width: 100%;
+	height: 400px;
+}
