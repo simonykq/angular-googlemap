@@ -22,6 +22,7 @@
     $scope.geolocationAvailable = navigator.geolocation ? true : false;
     $scope.address = {
       street_address: "",
+      sublocality: "",
       locality: "",
       administrative_area: "",
       country: "",
@@ -62,14 +63,15 @@
             street_address.push(com.long_name);
           case "route":
             console.log('route', com);
-            street_address.push(com.long_name); 
-          // case "sublocality":
-          //   console.log('sublocality', com);
-          //   street_address.push(com.long_name);               
-          // case "street_address":
-          //   console.log('street_address', com);
-          //   street_address.push(com.long_name);
-          //   break;
+            street_address.push(com.long_name);             
+          case "street_address":
+            console.log('street_address', com);
+            // street_address.push(com.long_name);
+            $scope.address.street_address = com.long_name;
+            break;
+          case "sublocality":
+            console.log('sublocality', com);
+            $scope.address.sublocality = com.long_name;
           case "locality":  
             console.log('locality', com);
             $scope.address.locality = com.long_name;
@@ -98,7 +100,9 @@
 
         }
       });
-      $scope.address.administrative_area = administrative_area.join(',');
+      if(administrative_area.length !== 0){
+        $scope.address.administrative_area = administrative_area.join(','); 
+      }
       if(street_address.length !== 0){
         $scope.address.street_address = street_address.join(',');  
       }
