@@ -1,24 +1,53 @@
 (function(){
   var app = angular.module("myApp", ["ui"]);
 
-  app.controller('MapCtrl', function($scope,$window){
+  app.factory('debounce', function($timeout, $q) {
+  return function(func, wait, immediate) {
+    var timeout;
+    var deferred = $q.defer();
+    return function() {
+      var context = this, args = arguments;
+      var later = function() {
+        timeout = null;
+        if(!immediate) {
+          deferred.resolve(func.apply(context, args));
+          deferred = $q.defer();
+        }
+      };
+      var callNow = immediate && !timeout;
+      if ( timeout ) {
+        $timeout.cancel(timeout);
+      }
+      timeout = $timeout(later, wait);
+      if (callNow) {
+        deferred.resolve(func.apply(context,args));
+        deferred = $q.defer();
+      }
+      return deferred.promise;
+    };
+  };
+});
+
+  app.controller('MapCtrl', function($scope,$window, debounce){
 
     $scope.$watch('myMap', function(){
       $scope.marker.setMap($scope.myMap); 
     });
     $scope.$watch('search', function(v){
-      $scope.geocoder.geocode({'address': v}, function(results,status){
-        if (status == google.maps.GeocoderStatus.OK){
-          $scope.setLocation(results)
-          $scope.myMap.panTo(results[0].geometry.location);
-          $scope.marker.setPosition(results[0].geometry.location);
-        }
-        else{
-          console.log("Geocode fails")
-        }
-      });
+      debounce(
+        $scope.geocoder.geocode({'address': v}, function(results,status){
+          if (status == google.maps.GeocoderStatus.OK){
+            $scope.setLocation(results)
+            $scope.myMap.panTo(results[0].geometry.location);
+            $scope.marker.setPosition(results[0].geometry.location);
+          }
+          else{
+            console.log("Geocode fails")
+          }
+        }),
+        1000,
+        false)
     });
-
     $scope.geolocationAvailable = navigator.geolocation ? true : false;
     $scope.address = {
       street_address: "",
@@ -49,8 +78,6 @@
          }
       });
     });
-
-
 
     $scope.setLocation = function(results){
       comps = results[0].address_components;
