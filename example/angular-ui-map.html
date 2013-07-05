@@ -23,51 +23,36 @@
     <script src="build/angular-ui-ieshiv.js"></script>
     <![endif]-->
 </head>
-<body>
-	<div ng-controller="MapCtrl">
-  	<div class="half">
-    <form>
-<!--     	<label>Name</label>
-    	<input type="text">
-
-    	<label>Description</label>
-    	<textarea rows="5" cols="20"></textarea> -->
-
-        <h4>Your Loacation Information</h4>	
+<body ng-controller="MapCtrl">
+  <div id="container">
+    <form id="myform">
+        <h1>Your Loacation Information</h1> 
         <label>Street</label>
-        <input type="text" ng-model="address.street_address" ng-change="geolocate()">	
-        <br>
+        <input type="text" ng-model="address.street_address" ng-change="geolocate()">   
         <label>District</label>
         <input type="text" ng-model="address.sublocality" ng-change="geolocate()"> 
-        <br>
         <label>Town or City</label>
         <input type="text" ng-model="address.locality" ng-change="geolocate()"> 
-        <br>
         <label>County State or Province</label> 
         <input type="text" ng-model="address.administrative_area" ng-change="geolocate()"> 
-        <br>
         <label>Country</label> 
         <input type="text" ng-model="address.country" ng-change="geolocate()"> 
-        <br>
         <label>Postcodes</label> 
         <input type="text" ng-model="address.postal_code" ng-change="geolocate()"> 
-        <br>
-        <label>Latitude</label>
-        <span ng-bind="marker.getPosition().lat()"></span>
-        <br> 
-        <label>Longitute</label>
-        <span ng-bind="marker.getPosition().lng()"></span>
-        <br>
-        <br>
+        <label class="small">Latitude
+          <span ng-bind="marker.getPosition().lat()"></span>
+        </label>
+                <label class="small">Longitute
+          <span ng-bind="marker.getPosition().lng()"></span>
+        </label>
         <label>Search</label>
         <input type="text" ng-model="search">
-
     </form>
-  	</div>
+  </div>    
  
-    <div class="half">
-      <div id="map_canvas" ui-map="myMap" class="map" ui-options="mapOptions" ui-event="{'map-click' : 'setLocation($event)'}"></div>
-    </div>
+  <div class="half">
+    <div id="map_canvas" ui-map="myMap" class="map" ui-options="mapOptions" ui-event="{'map-click' : 'setLocation($event)'}"></div>
+  </div>
 
 </body>
 </html>
