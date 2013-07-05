@@ -154,6 +154,10 @@
         }
       });
     }
+    
+    // Enable the visual refresh
+    google.maps.visualRefresh = true;
+
     // Set the users' geolocation on the map
     $window.navigator.geolocation.getCurrentPosition(function(position){
       if($scope.geolocationAvailable){
