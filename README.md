@@ -1,4 +1,5 @@
-angular-google-maps
-===================
 
-AngularJS directives for the Google Maps Javascript API
+AngularJS directives for the Google Map Javascript API
+=======
+angular-googlemap
+=================
